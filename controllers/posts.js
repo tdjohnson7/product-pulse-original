@@ -1,14 +1,27 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
+const Company = require("../models/Company");
+const Customer = require("../models/Customer");
 
 
 module.exports = {
-  getProfile: async (req, res) => {
+  getCustomerProfile: async (req, res) => {
     try {
-      const posts = await Post.find({ user: req.user.id });
+      console.log(req.user)
+      const posts = await Customer.find({ user: req.user.id });
      
-      res.render("profile.ejs", { posts: posts, user: req.user });
+      res.render("customerProfile.ejs", { products: [{title: "product1"}, {title: "product2"}, {title: "product3"}], companies: [{companyName: "company1"}, {companyName: "company2"}, {companyName: "company3"}], posts: posts, user: req.user });
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  getCompanyProfile: async (req, res) => {
+    try {
+      const posts = await Company.find({ company: req.user.id });
+      console.log("getCompanyProfile see req.user.id", req.user.id)
+     
+      res.render("companyProfile.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -16,7 +29,7 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find().sort({ createdAt: "desc" }).lean();
-      res.render("feed.ejs", { posts: posts });
+      res.render("feed.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +62,7 @@ module.exports = {
       console.log(err);
     }
   },
-  likePost: async (req, res) => {
+  rateProduct: async (req, res) => {
     try {
       await Post.findOneAndUpdate(
         { _id: req.params.id },

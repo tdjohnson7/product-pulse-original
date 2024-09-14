@@ -4,15 +4,21 @@ const authController = require("../controllers/auth");
 const homeController = require("../controllers/home");
 const postsController = require("../controllers/posts");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
+const upload = require("../middleware/multer")
 
 //Main Routes - simplified for now
 router.get("/", homeController.getIndex);
-router.get("/profile", ensureAuth, postsController.getProfile);
+router.get("/customerProfile", ensureAuth, postsController.getCustomerProfile);
+router.get("/companyProfile", ensureAuth, postsController.getCompanyProfile);
 router.get("/feed", ensureAuth, postsController.getFeed);
-router.get("/login", authController.getLogin);
-router.post("/login", authController.postLogin);
+router.get("/customerLogin", authController.getCustomerLogin);
+router.get("/companyLogin", authController.getCompanyLogin);
+router.post("/customerLogin", authController.postCustomerLogin);
+router.post("/companyLogin", authController.postCompanyLogin);
 router.get("/logout", authController.logout);
-router.get("/signup", authController.getSignup);
-router.post("/signup", authController.postSignup);
+router.get("/customerSignup", authController.getCustomerSignup);
+router.get("/companySignup", authController.getCompanySignup);
+router.post("/customerSignup", authController.postCustomerSignup);
+router.post("/companySignup", upload.single('file'), authController.postCompanySignup);
 
 module.exports = router;

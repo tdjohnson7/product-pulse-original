@@ -10,6 +10,7 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const { passportCustomer } = require("./config/passport");
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -59,5 +60,5 @@ app.use("/post", postRoutes);
 
 //Server Running
 app.listen(process.env.PORT, () => {
-  console.log("Server is running, you better catch it!");
+  console.log(`Server is running on ${process.env.Port}, you better catch it!`);
 });
