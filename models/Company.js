@@ -9,14 +9,17 @@ const CompanySchema = new mongoose.Schema({
   image: {
     type: String,
     require: false,
+    default: null
   },
   companyIconCloudinaryId: {
     type: String,
     require: false,
+    default: null
   },
   companyDescription: {
     type: String,
     required: false,
+    default: null
   },
 });
 

@@ -1,4 +1,6 @@
 <%- include('partials/header') -%>
+<div class="mt-5">
+  <h1>Feed</h1>
   <div class="container">
     <div class="row justify-content-center mt-5">
       <ul class="row list-unstyled">
@@ -12,4 +14,33 @@
         </ul>
     </div>
   </div>  
+
+  <h2>Add a post</h2>
+  <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+    <div class="mb-3">
+      <label for="company" class="form-label">Company</label>
+      <select class="form-control" id="company" name="company">
+        <% companies.forEach(company => { %>
+          <option><%= company.companyName %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="productList" class="form-label">Product/Service</label>
+      <select class="form-control" id="productList" name="productList">
+        <option>Select a Company</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="mb-3">
+      <label for="caption" class="form-label">Caption</label>
+      <textarea class="form-control" id="caption" name="caption"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+  </form>
+</div>
+
 <%- include('partials/footer') -%>

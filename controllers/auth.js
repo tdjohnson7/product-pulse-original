@@ -6,7 +6,7 @@ const cloudinary = require("../middleware/cloudinary")
 
 exports.getCustomerLogin = (req, res) => {
   if (req.user) {
-    return res.redirect("/customerProfile");
+    return res.redirect("/feed");
   }
   res.render("customerLogin", {
     title: "Login",
@@ -15,7 +15,7 @@ exports.getCustomerLogin = (req, res) => {
 
 exports.getCompanyLogin = (req, res) => {
   if (req.user) {
-    return res.redirect("/companyProfile");
+    return res.redirect("/feed");
   }
   res.render("companyLogin", {
     title: "Login",
@@ -193,33 +193,27 @@ exports.postCustomerSignup = (req, res, next) => {
       });
   
       // Await the Cloudinary upload
-      let result = {};
-if (req.file) {
-  try {
-    result = await cloudinary.uploader.upload(req.file.path);
-  } catch (error) {
-    console.error("Error uploading image to Cloudinary:", error);
-    // Handle the error, e.g., send an error response to the client
-  }
-}
-
-const company = new Company({
-  companyName: req.body.companyName,
-  email: req.body.email,
-  password: req.body.password,
-  image: result.secure_url || null,
-  cloudinaryId: result.public_id || null,
-  companyDescription: req.body.companyDescription
-});
-
-try {
-  await company.save();
-  res.status(201).send({ message: "Company created successfully!" });
-} catch (error) {
-  console.error("Error saving company:", error);
-  res.status(500).send({ message: "Error creating company" });
-}
-
+      let result
+      if(req.file){
+        try {
+          result = await cloudinary.uploader.upload(req.file.path);
+        }
+         catch(error){
+            console.log("Error uploading image to Cloudinary:", error)
+          }
+        }
+        else{
+            console.log('No file to upload')
+          }
+        
+       const newCompany = new Company({
+        companyName: req.body.companyName,
+        email: req.body.email,
+        password: req.body.password,
+        image: result ? result.secure_url : undefined,
+        cloudinaryId: result ? result.public_id : undefined,
+        companyDescription: req.body.companyDescription
+      });
   
       // Await the database query
       const existingCompany = await Company.findOne({
@@ -234,9 +228,9 @@ try {
       }
   
       // Await the save operation
-      await company.save();
+      await newCompany.save();
   
-      req.logIn(company, (err) => {
+      req.logIn(newCompany, (err) => {
         if (err) {
           return next(err);
         }

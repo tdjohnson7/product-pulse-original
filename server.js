@@ -10,6 +10,7 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const productRoutes = require("./routes/products");
 const { passportCustomer } = require("./config/passport");
 
 //Use .env file in config folder
@@ -54,9 +55,19 @@ app.use(passport.session());
 //Use flash messages for errors, info, ect...
 app.use(flash());
 
+//middleware from attaching the user object to every response object to render the navbar correctly with every request
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  console.log("res.user", res.user)
+  console.log("res.locals.user", res.locals.user)
+  next()
+})
+
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 app.use("/post", postRoutes);
+app.use("/product", productRoutes);
+
 
 //Server Running
 app.listen(process.env.PORT, () => {
