@@ -2,8 +2,8 @@
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-6">  
-      <h2><%= company.name %></h2>
-      <h3><%= company.title %></h3>
+      <h2><%= user.companyName %></h2>
+      <h3><%= user.email %></h3>
       
       <img class="img-fluid" src="<%= product.image%>" />
       <div class="row justify-content-between">
@@ -14,7 +14,7 @@
         >
         <label for="productRating">Rate the <%= product.name %> from 1-5</label>
         <input type="number" id="productRating" name="productRating" min="1" max="5">
-          <button class="btn btn-primary" type="submit"></button>
+          <button class="btn btn-primary" type="submit">Rate</button>
         </form>
         <h3 class="col-3">Likes: <%= product.rating %></h3>
         <%if(product.user == user.id){ %>
@@ -33,7 +33,7 @@
     </div>
     <div>
       <ul>
-        <% for(var i=0;i<comments.length;i++) {%>
+        <% for(var i=0;i<comments.length;i++) { %>
           <li class="col-6 justify-content-between mt-5">
             <%= comments[i].comment  %>
           </li>
@@ -45,10 +45,9 @@
       </form>
     </div>
     <div class="col-6 mt-5">
-        <% if (user.userType = "customer"){ $>
+        <% if (user.customerName){ %>
       <a class="btn btn-primary" href="/customerProfile">Return to Profile</a>
-      <%}%>
-      <% else if (user.userType = "company"){ $>
+      <%} else if (user.companyName){ %>
         <a class="btn btn-primary" href="/companyProfile">Return to Profile</a>
         <%}%>
         

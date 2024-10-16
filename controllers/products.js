@@ -38,9 +38,9 @@ module.exports = {
   },
   getProduct: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id);
-      const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).lean();
-      res.render("product.ejs", { post: post, user: req.user, comments: comments });
+      const product = await Product.findById(req.params.id);
+      const comments = await Comment.find({product: req.params.id}).sort({ createdAt: "desc" }).lean();
+      res.render("product.ejs", { product: product, user: req.user, comments: comments });
     } catch (err) {
       console.log(err);
     }
