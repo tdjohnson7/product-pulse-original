@@ -39,8 +39,9 @@ module.exports = {
   getProduct: async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
+      const averageRating = await product.ratings.reduce((sum, rating) => sum + rating, 0) / product.ratings.length
       const comments = await Comment.find({product: req.params.id}).sort({ createdAt: "desc" }).lean();
-      res.render("product.ejs", { product: product, user: req.user, comments: comments });
+      res.render("product.ejs", { product: product, user: req.user, comments: comments, averageRating: averageRating });
     } catch (err) {
       console.log(err);
     }
@@ -72,14 +73,14 @@ module.exports = {
   },
   rateProduct: async (req, res) => {
     try {
-      await Post.findOneAndUpdate(
+      const product = await Product.findOneAndUpdate(
         { _id: req.params.id },
         {
-          // $inc: { likes: 1 },
+          $push: { ratings: req.body.productRating}
         }
       );
-      console.log("Likes +1");
-      res.redirect(`/post/${req.params.id}`);
+      console.log("Rating Updated");
+      res.redirect(`/product/${req.params.id}`);
     } catch (err) {
       console.log(err);
     }

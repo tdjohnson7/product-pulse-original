@@ -3,7 +3,8 @@
   <div class="row justify-content-center mt-5">
     <div class="col-6">  
       <h2><%= user.companyName %></h2>
-      <h3><%= user.email %></h3>
+      <h3>Product Title: <%= product.productTitle %></h3>
+      <h3>Description: <%= product.productDescription %></h3>
       
       <img class="img-fluid" src="<%= product.image%>" />
       <div class="row justify-content-between">
@@ -12,14 +13,15 @@
           action="/product/rateProduct/<%= product.id %>?_method=PUT"
           method="POST"
         >
-        <label for="productRating">Rate the <%= product.name %> from 1-5</label>
+        <h3 class="col-3">Rating: <%= averageRating %></h3>
+
+        <label for="productRating">Rate the <%= product.productTitle %> from 1-5</label>
         <input type="number" id="productRating" name="productRating" min="1" max="5">
           <button class="btn btn-primary" type="submit">Rate</button>
         </form>
-        <h3 class="col-3">Likes: <%= product.rating %></h3>
         <%if(product.user == user.id){ %>
         <form
-          action="/post/deletePost/<%= product.id %>?_method=DELETE"
+          action="/product/deletePost/<%= product.id %>?_method=DELETE"
           method="POST"
           class="col-3"
         >

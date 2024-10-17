@@ -17,8 +17,9 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    productRating: {
-        type: Number
+    ratings: {
+        type: [Number],
+        default: []
     },
     companyId: {
         type: mongoose.Schema.Types.ObjectId,

@@ -10,7 +10,7 @@ router.get("/:id", ensureAuth, productController.getProduct);
 
 router.post("/createProduct", upload.single("file"), productController.createProduct);
 
-router.put("/likeProduct/:id", productController.rateProduct);
+router.put("/rateProduct/:id", productController.rateProduct);
 
 router.delete("/deleteProduct/:id", productController.deleteProduct);
 
