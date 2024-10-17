@@ -88,12 +88,12 @@ module.exports = {
   deleteProduct: async (req, res) => {
     try {
       // Find post by id
-      let post = await Product.findById({ _id: req.params.id });
+      let product = await Product.findById({ _id: req.params.id });
       // Delete image from cloudinary
       await cloudinary.uploader.destroy(product.cloudinaryId);
       // Delete post from db
       await Product.remove({ _id: req.params.id });
-      console.log("Deleted Post");
+      console.log("Deleted Product");
       res.redirect("/companyProfile");
     } catch (err) {
       res.redirect("/companyProfile");
@@ -101,16 +101,12 @@ module.exports = {
   },
   addComment: async (req, res) => {
     try {
-      
-
       await Comment.create({
-        
-        post: req.params.id,
+        product: req.params.id,
         comment: req.body.comment,
-        likes: 0,
       });
       console.log("comment has been added!");
-      res.redirect(`/post/` + req.params.id);
+      res.redirect(`/product/` + req.params.id);
     } catch (err) {
       console.log(err);
     }

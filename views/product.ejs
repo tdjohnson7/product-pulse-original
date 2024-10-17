@@ -19,9 +19,9 @@
         <input type="number" id="productRating" name="productRating" min="1" max="5">
           <button class="btn btn-primary" type="submit">Rate</button>
         </form>
-        <%if(product.user == user.id){ %>
+        <%if(product.companyId == user.id){ %>
         <form
-          action="/product/deletePost/<%= product.id %>?_method=DELETE"
+          action="/product/deleteProduct/<%= product.id %>?_method=DELETE"
           method="POST"
           class="col-3"
         >
@@ -41,19 +41,12 @@
           </li>
         <% } %>
       </ul>
-      <form action="/post/addComment/<%=product._id %>" method="POST">
+      <% if(user.customerName){ %>
+      <form action="/product/addComment/<%=product._id %>" method="POST">
         <input type="text" name="comment">
         <button class="btn btn-primary" type="submit">Add Comment</button>
       </form>
-    </div>
-    <div class="col-6 mt-5">
-        <% if (user.customerName){ %>
-      <a class="btn btn-primary" href="/customerProfile">Return to Profile</a>
-      <%} else if (user.companyName){ %>
-        <a class="btn btn-primary" href="/companyProfile">Return to Profile</a>
-        <%}%>
-        
-      <a class="btn btn-primary" href="/feed">Return to Feed</a>
+      <% } %>
     </div>
   </div>
 </div>
