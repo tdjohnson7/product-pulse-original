@@ -1,10 +1,12 @@
 <div class="col-6 mt-5">
-    <% if (user.customerName){ %>
-  <a class="btn btn-primary" href="/customerProfile">Return to Profile</a>
-  <%} else if (user.companyName){ %>
-    <a class="btn btn-primary" href="/companyProfile">Return to Profile</a>
-    <%}%>
-    
+  <% if (user){%>
+    <% if (user.companyName){ %>
+      <a class="btn btn-primary" href="/companyProfile">Return to Profile</a>
+    <%} else if (user.customerName){ %>
+      <a class="btn btn-primary" href="/customerProfile">Return to Profile</a>
+    <%} %>
+  <%} %>
+      
   <a class="btn btn-primary" href="/feed">Return to Feed</a>
 </div>
 

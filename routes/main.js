@@ -14,7 +14,7 @@ router.get("/companyLogin", authController.getCompanyLogin);
 router.post("/companyLogin", authController.postCompanyLogin);
 router.get("/customerProfile", ensureAuth, postsController.getCustomerProfile);
 router.get("/companyProfile", ensureAuth, productsController.getCompanyProfile);
-router.get("/feed", ensureAuth, postsController.getFeed);
+router.get("/feed", ensureAuth, productsController.getFeed);
 router.post("/customerLogin", authController.postCustomerLogin);
 router.get("/logout", authController.logout);
 router.get("/customerSignup", authController.getCustomerSignup);

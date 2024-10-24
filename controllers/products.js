@@ -9,7 +9,6 @@ const Product = require("../models/Product")
 module.exports = {
   getCustomerProfile: async (req, res) => {
     try {
-      console.log("req.user", req.user)
       const posts = await Customer.find({ user: req.user.id });
      
       res.render("customerProfile.ejs", { products: [{title: "product1"}, {title: "product2"}, {title: "product3"}], companies: [{companyName: "company1"}, {companyName: "company2"}, {companyName: "company3"}], posts: posts, user: req.user });
@@ -29,9 +28,9 @@ module.exports = {
   },
   getFeed: async (req, res) => {
     try {
-      const companies = await Company.find()
-      const posts = await Product.find().sort({ createdAt: "desc" }).lean();
-      res.render("feed.ejs", { posts: posts, user: req.user, companies: companies });
+      const companies = await Company.find().sort({companyName: 1})
+      const products = await Product.find().sort({ createdAt: "desc" });
+      res.render("feed.ejs", { products: products, companies: companies });
     } catch (err) {
       console.log(err);
     }
