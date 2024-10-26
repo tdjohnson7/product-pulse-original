@@ -7,6 +7,7 @@
         <% for(var i=0; i<products.length; i++) {%>
           <li class="col-6 justify-content-between mt-5">
             <a href="/product/<%= products[i]._id%>">
+              <h3><%=products[i].productTitle%></h3>
               <img class="img-fluid" src="<%= products[i].image%>">
             </a>
           </li>
@@ -15,31 +16,17 @@
     </div>
   </div>  
 
-  <h2>Add a post</h2>
-  <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+  <h2>Filter Products</h2>
+  <form action="/product/filterProducts" method="POST">
     <div class="mb-3">
       <label for="company" class="form-label">Company</label>
       <select class="form-control" id="company" name="company">
         <% companies.forEach(company => { %>
-          <option><%= company.companyName %></option>
+          <option value="<%=company.id%>"><%= company.companyName %></option>
         <% }) %>
       </select>
     </div>
-    <div class="mb-3">
-      <label for="productList" class="form-label">Product/Service</label>
-      <select class="form-control" id="productList" name="productList">
-        <option>Select a Company</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" name="title">
-    </div>
-    <div class="mb-3">
-      <label for="caption" class="form-label">Caption</label>
-      <textarea class="form-control" id="caption" name="caption"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+    <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
   </form>
 </div>
 

@@ -16,6 +16,8 @@ router.delete("/deleteProduct/:id", productController.deleteProduct);
 
 router.post("/addComment/:id", productController.addComment);
 
+router.post("/filterProducts", productController.filterProducts);
+
 
 
 module.exports = router;

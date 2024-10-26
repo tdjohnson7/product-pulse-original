@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const products = require("../controllers/products");
 
 const CommentSchema = new mongoose.Schema({
   
@@ -6,11 +7,14 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  product: {
+  productId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
-
+  productName: {
+    type: String,
+    required: true
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",

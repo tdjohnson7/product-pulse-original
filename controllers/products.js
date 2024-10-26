@@ -4,14 +4,20 @@ const Comment = require("../models/Comment");
 const Company = require("../models/Company");
 const Customer = require("../models/Customer");
 const Product = require("../models/Product")
+const mongoose = require('mongoose')
 
 
 module.exports = {
   getCustomerProfile: async (req, res) => {
     try {
-      const posts = await Customer.find({ user: req.user.id });
+      const comments = await Comment.find()
+        // { user: req.user.id }
+      // );
+      console.log('comments', comments)
      
-      res.render("customerProfile.ejs", { products: [{title: "product1"}, {title: "product2"}, {title: "product3"}], companies: [{companyName: "company1"}, {companyName: "company2"}, {companyName: "company3"}], posts: posts, user: req.user });
+      res.render("customerProfile.ejs", 
+        { comments: comments }
+      );
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +35,9 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const companies = await Company.find().sort({companyName: 1})
-      const products = await Product.find().sort({ createdAt: "desc" });
+      const products = await Product.find({companyId: companies[0].id})
+      console.log("products", products)
+      // const products = await Product.find().sort({ createdAt: "desc" });
       res.render("feed.ejs", { products: products, companies: companies });
     } catch (err) {
       console.log(err);
@@ -110,4 +118,16 @@ module.exports = {
       console.log(err);
     }
   },
+  filterProducts: async (req, res) => {
+    try{
+      // const company = await Company.findById(mongoose.Types.ObjectId(req.body.company))
+      const company = {}
+      const products = await Product.find({ companyId: res.id})
+      console.log('res filterProducts', res.body)
+
+      res.render("feed.ejs", {products: products})
+    } catch (err) {
+      console.log(err)
+    }
+  }
 };
