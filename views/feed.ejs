@@ -21,9 +21,12 @@
     <div class="mb-3">
       <label for="company" class="form-label">Company</label>
       <select class="form-control" id="company" name="company">
-        <% companies.forEach(company => { %>
-          <option value="<%=company.id%>"><%= company.companyName %></option>
-        <% }) %>
+        <%if(company){ %>
+          <option value="<%=company.id%>"><%= company.companyName%></option>
+        <% } %>
+          <% companies.forEach(company => { %>
+            <option value="<%=company.id%>"><%= company.  companyName %></option>
+          <% }) %>
       </select>
     </div>
     <button type="submit" class="btn btn-primary" value="Submit">Submit</button>

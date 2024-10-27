@@ -38,7 +38,7 @@ module.exports = {
       const products = await Product.find({companyId: companies[0].id})
       console.log("products", products)
       // const products = await Product.find().sort({ createdAt: "desc" });
-      res.render("feed.ejs", { products: products, companies: companies });
+      res.render("feed.ejs", { products: products, companies: companies, company: null });
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +47,9 @@ module.exports = {
     try {
       const product = await Product.findById(req.params.id);
       const averageRating = await product.ratings.reduce((sum, rating) => sum + rating, 0) / product.ratings.length
-      const comments = await Comment.find({product: req.params.id}).sort({ createdAt: "desc" }).lean();
+      const comments = await Comment.find({productId: req.params.id}).sort({ createdAt: "desc" })
+      // .lean();
+      console.log('comment model getProduct', Comment)
       res.render("product.ejs", { product: product, user: req.user, comments: comments, averageRating: averageRating });
     } catch (err) {
       console.log(err);
@@ -100,6 +102,7 @@ module.exports = {
       await cloudinary.uploader.destroy(product.cloudinaryId);
       // Delete post from db
       await Product.remove({ _id: req.params.id });
+      await Comment.remove({ productId: req.params.id})
       console.log("Deleted Product");
       res.redirect("/companyProfile");
     } catch (err) {
@@ -109,8 +112,10 @@ module.exports = {
   addComment: async (req, res) => {
     try {
       await Comment.create({
-        product: req.params.id,
+        productId: req.params.id,
         comment: req.body.comment,
+        userId: req.user._id,
+        userName: req.user.userName
       });
       console.log("comment has been added!");
       res.redirect(`/product/` + req.params.id);
@@ -120,13 +125,27 @@ module.exports = {
   },
   filterProducts: async (req, res) => {
     try{
-      // const company = await Company.findById(mongoose.Types.ObjectId(req.body.company))
-      const company = {}
-      const products = await Product.find({ companyId: res.id})
+      const companies = await Company.find()
+      const products = await Product.find({ companyId: mongoose.Types.ObjectId(req.body.company)})
+      // const products = true
+      console.log('products', products)
+      console.log('companyId', req.body.company)
+      const company = await Company.findById(req.body.company)
+
       console.log('res filterProducts', res.body)
 
-      res.render("feed.ejs", {products: products})
+      res.render("feed.ejs", {companies: companies, products: products, company: company})
     } catch (err) {
+      console.log(err)
+    }
+  },
+  deleteComments: async (req, res) => {
+    try{
+      const comment = Comment.findOne({ _id: req.params.id})
+      await Comment.remove({_id: req.params.id})
+      console.log("Comments Deleted")
+      res.redirect(`/product/` + comment.productId);
+    } catch (err){
       console.log(err)
     }
   }

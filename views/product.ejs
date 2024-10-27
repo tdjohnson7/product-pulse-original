@@ -34,14 +34,24 @@
       <p><%= product.caption %></p>
     </div>
     <div>
+      <h3>Customer Comments</h3>
       <ul>
         <% for(var i=0;i<comments.length;i++) { %>
           <li class="col-6 justify-content-between mt-5">
-            <%= comments[i].comment  %>
+            <%= comments[i].comment %> by <%= comments[i].userName%>
+            <%if(comments[i].userId == user.id){ %>
+              <form
+                action="/product/deleteComments/<%= comments[i].id %>?_method=DELETE"
+                method="POST"
+                class="col-3"
+              >
+                <button class="btn btn-primary fa fa-trash" type="submit"></button>
+              </form>
           </li>
         <% } %>
+        <% } %>
       </ul>
-      <% if(user.customerName){ %>
+      <% if(user.userName){ %>
       <form action="/product/addComment/<%=product._id %>" method="POST">
         <input type="text" name="comment">
         <button class="btn btn-primary" type="submit">Add Comment</button>
