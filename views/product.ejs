@@ -1,43 +1,54 @@
 <%- include('partials/header') -%>
 <div class="container">
-  <div class="row justify-content-center mt-5">
+  <div class="row mt-5 justify-content-around text-center">
     <div class="col-6">  
-      <h2><%= user.companyName %></h2>
-      <h3>Product Title: <%= product.productTitle %></h3>
-      <h3>Description: <%= product.productDescription %></h3>
+      <h2>Product Title: <%= product.productTitle %></h2>
+      <h3><%= product.companyName %></h3>
       
-      <img class="img-fluid" src="<%= product.image%>" />
-      <div class="row justify-content-between">
-        <form
-          class="col-1"
-          action="/product/rateProduct/<%= product.id %>?_method=PUT"
-          method="POST"
-        >
-        <h3 class="col-3">Rating: <%= averageRating %></h3>
+    </div>
 
-        <label for="productRating">Rate the <%= product.productTitle %> from 1-5</label>
-        <input type="number" id="productRating" name="productRating" min="1" max="5">
-          <button class="btn btn-primary" type="submit">Rate</button>
-        </form>
-        <%if(product.companyId == user.id){ %>
+    <%if(product.companyId == user.id){ %>
+      <div class="col-6">
         <form
           action="/product/deleteProduct/<%= product.id %>?_method=DELETE"
           method="POST"
-          class="col-3"
+          
         >
           <button class="btn btn-primary fa fa-trash" type="submit"></button>
         </form>
-        <%}%>
       </div>
+        <%}%>
+
     </div>
-    <div class="col-3 mt-5">
-      <p><%= product.caption %></p>
-    </div>
-    <div>
+  
+      <div class="row justify-content-between">
+        <div class="col-6">
+          <img class="img-fluid" src="<%= product.image%>" />
+        </div> 
+        <div class="col-6 d-flex flex-column justify-content-around">
+          <div>
+            <h3>Description: </h3>
+            <h4> <%= product.productDescription %></h4>
+          </div>
+        <div>
+          <form
+          action="/product/rateProduct/<%= product.id %>?_method=PUT"
+          method="POST"
+        >
+        <h3>Rating: <%= averageRating %></h3>
+
+        <label for="productRating">Rate <%= product.productTitle %> from 1-5</label>
+        <input type="number" id="productRating" name="productRating" min="1" max="5">
+          <button class="btn btn-primary" type="submit">Rate</button>
+        </form>
+      </div>
+        
+        
+      <div>
       <h3>Customer Comments</h3>
       <ul>
         <% for(var i=0;i<comments.length;i++) { %>
-          <li class="col-6 justify-content-between mt-5">
+          <li class="col">
             <%= comments[i].comment %> by <%= comments[i].userName%>
             <%if(comments[i].userId == user.id){ %>
               <form
@@ -47,9 +58,9 @@
               >
                 <button class="btn btn-primary fa fa-trash" type="submit"></button>
               </form>
-          </li>
-        <% } %>
-        <% } %>
+             <% } %>
+             </li>
+        <% } %> 
       </ul>
       <% if(user.userName){ %>
       <form action="/product/addComment/<%=product._id %>" method="POST">
@@ -57,6 +68,7 @@
         <button class="btn btn-primary" type="submit">Add Comment</button>
       </form>
       <% } %>
+    </div>
     </div>
   </div>
 </div>

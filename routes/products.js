@@ -19,7 +19,7 @@ router.post("/addComment/:id", productController.addComment);
 
 router.post("/filterProducts", productController.filterProducts);
 
-router.delete('deleteComments/:id', productController.deleteComments)
+router.delete('/deleteComments/:id', productController.deleteComments)
 
 
 

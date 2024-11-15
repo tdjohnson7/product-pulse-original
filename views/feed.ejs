@@ -1,22 +1,28 @@
 <%- include('partials/header') -%>
 <div class="mt-5">
-  <h1>Feed</h1>
+  <h1 class="text-center">Feed</h1>
+  <h3 class="text-center">View Products and Sort by Company</h3>
   <div class="container">
     <div class="row justify-content-center mt-5">
       <ul class="row list-unstyled">
         <% for(var i=0; i<products.length; i++) {%>
           <li class="col-6 justify-content-between mt-5">
-            <a href="/product/<%= products[i]._id%>">
-              <h3><%=products[i].productTitle%></h3>
-              <img class="img-fluid" src="<%= products[i].image%>">
-            </a>
+            <div class="card" style="width: 18rem;">
+              <img src="<%= products[i].image%>" class="card-img-top" style="width: 200px" alt="product image">
+              <div class="card-body">
+                <h5 class="card-title"><%= products[i].productTitle%></h5>
+                <p class="card-text"><%=products[i].productDescription%></p>
+                <a href="/product/<%= products[i]._id%>" class="btn btn-primary">More</a>
+              </div>
+            </div>
           </li>
         <% } %>
         </ul>
     </div>
   </div>  
-
-  <h2>Filter Products</h2>
+  <div class="row justify-content-center">
+<div class="col-6">
+  <h2 class="text-center">Filter Products</h2>
   <form action="/product/filterProducts" method="POST">
     <div class="mb-3">
       <label for="company" class="form-label">Company</label>
@@ -31,6 +37,8 @@
     </div>
     <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
   </form>
+  </div>
+</div>
 </div>
 
 <%- include('partials/footer') -%>

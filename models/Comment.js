@@ -9,10 +9,10 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
-  // productName: {
-  //   type: String,
-  //   required: true
-  // },
+  productTitle: {
+    type: String,
+    required: true
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

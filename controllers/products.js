@@ -1,8 +1,6 @@
 const cloudinary = require("../middleware/cloudinary");
-const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 const Company = require("../models/Company");
-const Customer = require("../models/Customer");
 const Product = require("../models/Product")
 const mongoose = require('mongoose')
 
@@ -10,7 +8,7 @@ const mongoose = require('mongoose')
 module.exports = {
   getCustomerProfile: async (req, res) => {
     try {
-      const comments = await Comment.find()
+      const comments = await Comment.find({})
         // { user: req.user.id }
       // );
       console.log('comments', comments)
@@ -46,7 +44,7 @@ module.exports = {
   getProduct: async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
-      const averageRating = await product.ratings.reduce((sum, rating) => sum + rating, 0) / product.ratings.length
+      const averageRating = await product.ratings.reduce((sum, rating) => sum + rating, 0) / product.ratings.length || "No Ratings"
       const comments = await Comment.find({productId: req.params.id}).sort({ createdAt: "desc" })
       // .lean();
       console.log('comment model getProduct', Comment)
@@ -57,10 +55,7 @@ module.exports = {
   },
   createProduct: async (req, res) => {
     try {
-      // console.log("product/createProduct req", req)
-      console.log("product/createProduct req.body", req.body)
-      console.log("product/createProduct req.file", req.file)
-      console.log("product/createProduct req.user", req.user)
+     
       // Upload image to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path);
 
@@ -71,6 +66,7 @@ module.exports = {
         productDescription: req.body.productDescription,
         productRating: 5,
         companyId: req.user.id,
+        companyName: req.user.companyName
       });
       console.log("Product has been added!");
       console.log('Products created', 
@@ -111,11 +107,13 @@ module.exports = {
   },
   addComment: async (req, res) => {
     try {
+      const product = await Product.findById(req.params.id)
       await Comment.create({
         productId: req.params.id,
         comment: req.body.comment,
         userId: req.user._id,
-        userName: req.user.userName
+        userName: req.user.userName,
+        productName: product.productTitle
       });
       console.log("comment has been added!");
       res.redirect(`/product/` + req.params.id);
@@ -141,9 +139,9 @@ module.exports = {
   },
   deleteComments: async (req, res) => {
     try{
-      const comment = Comment.findOne({ _id: req.params.id})
+      const comment = await Comment.findOne({ _id: req.params.id})
       await Comment.remove({_id: req.params.id})
-      console.log("Comments Deleted")
+      console.log("Comment Deleted")
       res.redirect(`/product/` + comment.productId);
     } catch (err){
       console.log(err)
