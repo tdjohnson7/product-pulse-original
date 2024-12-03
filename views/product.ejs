@@ -9,6 +9,7 @@
 
     <%if(product.companyId == user.id){ %>
       <div class="col-6">
+        <h3>Delete Product</h3>
         <form
           action="/product/deleteProduct/<%= product.id %>?_method=DELETE"
           method="POST"
@@ -45,7 +46,7 @@
         
         
       <div>
-      <h3>Customer Comments</h3>
+      <h3>Customer Comments:</h3>
       <ul>
         <% for(var i=0;i<comments.length;i++) { %>
           <li class="col">
