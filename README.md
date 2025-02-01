@@ -4,17 +4,13 @@ Product Pulse simplifies the customer feedback process. Obtaining and organizing
 
 A company can create products to be listed under their company. Customers can leave reviews, like other customers' reviews and rate the products from 1-5.
 
-https://github.com/user-attachments/assets/72b014bd-4cd9-4f64-92e7-b6f332f78b32
+https://github.com/user-attachments/assets/031f095e-4cec-43e8-8012-a6f6aabcc0cd
 
 **Link to project:** [https://age-of-empires-4-unit-counter-calculator.onrender.com](https://product-pulse.onrender.com)
 
 ## How It's Made:
 
 **Tech used:** HTML, CSS, Bootstrap, JavaScript, EJS, Node, Express, MongoDB
-
-
-https://github.com/user-attachments/assets/72b014bd-4cd9-4f64-92e7-b6f332f78b32
-
 
 ## Optimizations
 
