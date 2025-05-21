@@ -6,7 +6,7 @@ A company can create products to be listed under their company. Customers can le
 
 https://github.com/user-attachments/assets/031f095e-4cec-43e8-8012-a6f6aabcc0cd
 
-**Link to project:** [https://age-of-empires-4-unit-counter-calculator.onrender.com](https://product-pulse.onrender.com)
+**Link to project:** [https://product-pulse.onrender.com/](https://product-pulse.onrender.com)
 
 ## How It's Made:
 
